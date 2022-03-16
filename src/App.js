@@ -13,23 +13,22 @@ class App extends React.Component {
     };
   }
 
-  addItem = async ({ target }) => {
-    const { value } = target;
+  // Alterada a lógica para inserir os objetos no estado items
+  addItem = async (productObj) => {
     const { items } = this.state;
-    const response = await fetch(` https://api.mercadolibre.com/items/${value}`);
-    const searchId = await response.json();
 
-    // Imple
-    const indexItems = items.findIndex((item) => item.id === value);
-    console.log(indexItems);
+    // productObj corresponde ao objeto que está sendo mapeado no Home, renderizando os ProductCards
+
+    // Implementada lógica para adicionar ítems no carrinho
+    const indexItems = items.findIndex((item) => item.id === productObj.id);
+
     const numberVerify = -1;
+
     if (indexItems === numberVerify) {
-      searchId.quantity = 1;
-      items.push(searchId);
-      console.log(items);
+      productObj.quantity = 1;
+      items.push(productObj);
     } else {
       items[indexItems].quantity += 1;
-      console.log(items);
     }
 
     this.setState(() => ({
@@ -39,8 +38,64 @@ class App extends React.Component {
     });
   }
 
+  // Incrementa um ítem na página do carrinho atravéz do botão +
+  incItem = async ({ target }) => {
+    const { value } = target;
+    const { items } = this.state;
+
+    // Implementada lógica para incrementar um ítem do carrinho
+    const indexItems = items.findIndex((item) => item.id === value);
+
+    if (items[indexItems].quantity >= 1) {
+      items[indexItems].quantity += 1;
+    }
+
+    this.setState(() => ({
+      items,
+    }), () => {
+      localStorage.setItem('product', JSON.stringify(items));
+    });
+  }
+
+  // Decrementa um ítem na página do carrinho atravéz do botão -
+  decItem = async ({ target }) => {
+    const { value } = target;
+    const { items } = this.state;
+
+    // Implementada lógica para decrementar um ítem do carrinho
+    const indexItems = items.findIndex((item) => item.id === value);
+
+    if (items[indexItems].quantity >= 1) {
+      items[indexItems].quantity -= 1;
+    } else {
+      this.removeItem({ target });
+    }
+
+    this.setState(() => ({
+      items,
+    }), () => {
+      localStorage.setItem('product', JSON.stringify(items));
+    });
+  }
+
+  removeItem = async ({ target }) => {
+    const { value } = target;
+    const { items } = this.state;
+
+    // Implementada lógica para remover um ítem do carrinho
+    const indexItems = items.findIndex((item) => item.id === value);
+
+    items.splice(indexItems, 1);
+    this.setState(() => ({
+      items,
+    }), () => {
+      localStorage.setItem('product', JSON.stringify(items));
+    });
+  }
+
   render() {
     const { items } = this.state;
+
     return (
       <div>
         <BrowserRouter>
@@ -50,7 +105,18 @@ class App extends React.Component {
               path="/details/:id"
               render={ (props) => <Details { ...props } addItem={ this.addItem } /> }
             />
-            <Route exact path="/cart" render={ () => <ShoppingCart items={ items } /> } />
+            <Route
+              exact
+              path="/cart"
+              render={ () => (
+                <ShoppingCart
+                  removeItem={ this.removeItem }
+                  decItem={ this.decItem }
+                  incItem={ this.incItem }
+                  items={ items }
+                />
+              ) }
+            />
             <Route exact path="/" render={ () => <Home addItem={ this.addItem } /> } />
           </Switch>
         </BrowserRouter>

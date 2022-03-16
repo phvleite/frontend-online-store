@@ -14,6 +14,12 @@ class Details extends React.Component {
     this.productDetail();
   }
 
+  addItem = () => {
+    const { addItem } = this.props;
+    const { details } = this.state;
+    addItem(details);
+  }
+
   productDetail = async () => {
     const { match: { params: { id } } } = this.props;
     this.setState({}, async () => {
@@ -26,7 +32,7 @@ class Details extends React.Component {
 
   render() {
     const { details } = this.state;
-    const { addItem } = this.props;
+
     return (
       <>
         <ShoppingCartButton />
@@ -37,7 +43,7 @@ class Details extends React.Component {
           type="button"
           data-testid="product-detail-add-to-cart"
           value={ details.id }
-          onClick={ addItem }
+          onClick={ this.addItem }
         >
           Adicionar ao carrinho
         </button>
