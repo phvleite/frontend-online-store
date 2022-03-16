@@ -67,6 +67,8 @@ class App extends React.Component {
 
     if (items[indexItems].quantity >= 1) {
       items[indexItems].quantity -= 1;
+    } else {
+      this.removeItem({ target });
     }
 
     this.setState(() => ({
