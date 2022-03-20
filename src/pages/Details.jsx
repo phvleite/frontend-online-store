@@ -1,7 +1,8 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
-import ShoppingCartButton from '../components/ShoppingCartButton';
+import Evaluation from '../components/Evaluation';
 import EvaluationForm from '../components/EvaluationForm';
+import ShoppingCartButton from '../components/ShoppingCartButton';
 
 class Details extends React.Component {
   constructor() {
@@ -35,7 +36,9 @@ class Details extends React.Component {
   // starYellow = () => (<span role="img" aria-label="yellow-star">&#11088;</span>);
 
   render() {
+    const { match: { params: { id } } } = this.props;
     const { details } = this.state;
+    const { evaluations, submitEvaluation } = this.props;
 
     return (
       <>
@@ -51,7 +54,18 @@ class Details extends React.Component {
         >
           Adicionar ao carrinho
         </button>
-        <EvaluationForm productId={ details.id } />
+        <EvaluationForm productId={ id } submitEvaluation={ submitEvaluation } />
+        <div>
+          {evaluations[details.id] && evaluations[details.id].map((evaluation) => (
+            <Evaluation
+              key={ evaluation.id }
+              email={ evaluation.email }
+              rating={ evaluation.rating }
+              message={ evaluation.message }
+            />
+          ))}
+        </div>
+
       </>
     );
   }
@@ -64,6 +78,8 @@ Details.propTypes = {
     }).isRequired,
   }).isRequired,
   addItem: PropTypes.func.isRequired,
+  evaluations: PropTypes.objectOf(PropTypes.any).isRequired,
+  submitEvaluation: PropTypes.func.isRequired,
 };
 
 export default Details;

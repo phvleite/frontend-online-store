@@ -1,8 +1,7 @@
 import _ from 'lodash'; // biblioteca que possui a função range
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Evaluations from './Evaluations';
 
 class EvaluationForm extends React.Component {
   constructor() {
@@ -12,35 +11,8 @@ class EvaluationForm extends React.Component {
       message: '',
       buttonDisabled: true,
       rating: '',
-      evaluationsProducts: [],
-      evaluationsProductsSort: [],
     };
   }
-
-  componentDidMount() {
-    this.getSavedEvaluations();
-  }
-
-  getSavedEvaluations = () => {
-    const getEvalua = window.localStorage.getItem('evaluationsProducts');
-    let savedEvalua = JSON.parse(getEvalua);
-    if (savedEvalua === null) savedEvalua = [];
-    this.setState({ evaluationsProducts: savedEvalua });
-
-    const { productId } = this.props;
-
-    const indexItemEvalua = savedEvalua
-      .findIndex((evalua) => evalua.id === productId);
-
-    const numberVerify = -1;
-    let evaluationsProductsSort = [];
-
-    if (indexItemEvalua !== numberVerify) {
-      evaluationsProductsSort = savedEvalua[indexItemEvalua].evaluations;
-    }
-    console.log(evaluationsProductsSort);
-    this.setState({ evaluationsProductsSort });
-  };
 
   evaluationRatings = () => {
     const end = 6;
@@ -87,56 +59,33 @@ class EvaluationForm extends React.Component {
     }
   }
 
-  submitEvaluation = (event) => {
+  // função chamada após clicar no botão. Cria um obj com os estados e passa como parametro para a func submitEvaluation.
+  saveEvaluation = (event) => {
     event.preventDefault();
-    const { productId } = this.props;
-    const { email, rating, message, evaluationsProducts } = this.state;
-    const myUUID = uuidv4();
 
-    const indexItemEvalua = evaluationsProducts
-      .findIndex((evalua) => evalua.id === productId);
+    const { productId, submitEvaluation } = this.props;
+    const { email, rating, message } = this.state;
+    const id = uuidv4();
 
-    let evaluation = {};
-    const numberVerify = -1;
+    const evaluation = {
+      id,
+      email,
+      rating,
+      message,
+    };
 
-    if (indexItemEvalua === numberVerify) {
-      evaluation = { id: productId, evaluations: [{ myUUID, email, rating, message }] };
-      this.setState((prevState) => ({
-        evaluationsProducts: [...prevState.evaluationsProducts, evaluation],
-      }));
-    } else {
-      evaluationsProducts[indexItemEvalua]
-        .evaluations.push({ myUUID, email, rating, message });
-      this.setState({ evaluationsProducts });
-    }
+    submitEvaluation(productId, evaluation);
 
+    // reinicia os estados dos inputs depois de submeter a avaliação
+    document.querySelector('input[name="rating"]:checked').checked = false;
     this.setState({
       email: '',
       message: '',
-      buttonDisabled: true,
-      rating: '',
-    }, () => this.saveEvaluationsProducts());
-    // chave -> id: []
-    // logica de salvar no localStorage ainda vai entrar aqui.
+    });
   }
 
-  saveEvaluationsProducts = () => {
-    const { evaluationsProducts } = this.state;
-    const { productId } = this.props;
-
-    const indexItemEvalua = evaluationsProducts
-      .findIndex((evalua) => evalua.id === productId);
-
-    localStorage.setItem('evaluationsProducts', JSON.stringify(evaluationsProducts));
-
-    const evaluationsProductsSort = evaluationsProducts[indexItemEvalua].evaluations;
-    console.log(evaluationsProductsSort);
-    this.setState({ evaluationsProductsSort });
-  };
-
   render() {
-    const { email, message, buttonDisabled, evaluationsProductsSort } = this.state;
-    console.log(evaluationsProductsSort);
+    const { email, message, buttonDisabled } = this.state;
     return (
       <div>
         <h2> Avaliações </h2>
@@ -157,6 +106,7 @@ class EvaluationForm extends React.Component {
           </div>
 
           <textarea
+            data-testid="product-detail-evaluation"
             name="message"
             placeholder="Mensagem (opcional)"
             value={ message }
@@ -164,18 +114,13 @@ class EvaluationForm extends React.Component {
           />
           <button
             type="submit"
-            data-testid="save-button"
+            data-testid="submit-review-btn"
             disabled={ buttonDisabled }
-            onClick={ this.submitEvaluation }
+            onClick={ this.saveEvaluation }
           >
             Avaliar
           </button>
         </form>
-        {evaluationsProductsSort.map((evaluation) => (
-          <div key={ evaluation.myUUID }>
-            <Evaluations evaluation={ evaluation.evaluations } />
-          </div>
-        ))}
       </div>
     );
   }
@@ -183,6 +128,7 @@ class EvaluationForm extends React.Component {
 
 EvaluationForm.propTypes = {
   productId: PropTypes.string.isRequired,
+  submitEvaluation: PropTypes.func.isRequired,
 };
 
 export default EvaluationForm;
