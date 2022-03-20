@@ -10,7 +10,41 @@ class App extends React.Component {
     super();
     this.state = {
       items: [],
+      evaluations: {},
     };
+  }
+
+  componentDidMount() {
+    this.getSavedEvaluations();
+  }
+
+  getSavedEvaluations = () => {
+    const savedEvaluations = localStorage.getItem('evaluations');
+    const evaluations = JSON.parse(savedEvaluations);
+
+    if (evaluations) {
+      this.setState({
+        evaluations,
+      });
+    }
+  }
+
+  // Adiciona uma nova avaliação ao estado evaluations e atualiza o localStorage.
+  submitEvaluation = (productId, evaluation) => {
+    const { evaluations } = this.state;
+
+    const prevEvaluations = evaluations[productId]; // prevEvaluations é um array de objetos.
+    if (prevEvaluations) {
+      evaluations[productId] = [...prevEvaluations, evaluation]; // existindo essa chave, adc nova avaliação ao array ja existente.
+    } else {
+      evaluations[productId] = [evaluation]; // não existindo, cria, passando a avaliação dentro de um array.
+    }
+
+    this.setState({
+      evaluations,
+    }, () => {
+      localStorage.setItem('evaluations', JSON.stringify(evaluations));
+    });
   }
 
   // Alterada a lógica para inserir os objetos no estado items
@@ -94,7 +128,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, evaluations } = this.state;
 
     return (
       <div>
@@ -103,7 +137,14 @@ class App extends React.Component {
             <Route
               exact
               path="/details/:id"
-              render={ (props) => <Details { ...props } addItem={ this.addItem } /> }
+              render={ (props) => (
+                <Details
+                  { ...props }
+                  addItem={ this.addItem }
+                  evaluations={ evaluations }
+                  submitEvaluation={ this.submitEvaluation }
+                />
+              ) }
             />
             <Route
               exact
