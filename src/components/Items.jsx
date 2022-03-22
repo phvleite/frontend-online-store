@@ -1,5 +1,4 @@
 import { PropTypes } from 'prop-types';
-import { BsCartX, BsCartPlus, BsCartDash } from 'react-icons/bs';
 import React from 'react';
 
 class Items extends React.Component {
