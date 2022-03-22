@@ -7,10 +7,10 @@ class Evaluation extends React.Component {
 
     return (
       <div className="box-evaluation">
-        <p>{`e-Mail: ${email}`}</p>
-        <p>{`Classificação: ${rating}`}</p>
+        <p>{email}</p>
+        <p>{rating}</p>
         {
-          message.length > 0 && <p>{`Mensagem: ${message}`}</p>
+          message.length > 0 && <p>{message}</p>
         }
       </div>
     );
