@@ -83,6 +83,7 @@ class EvaluationForm extends React.Component {
     this.setState({
       email: '',
       message: '',
+      buttonDisabled: true,
     });
   }
 

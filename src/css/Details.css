@@ -104,7 +104,6 @@
   width: 350px;
 }
 
-
 .btn-submit-evalution {
   background-color: rgb(46, 134, 193);
   border: none;
@@ -124,6 +123,12 @@
 
 .btn-submit-evalution:active {
   filter: brightness(0.5);
+}
+
+.btn-submit-evalution:disabled {
+  background-color: rgb(248, 249, 249);
+  color: rgb(179, 182, 183);
+  cursor: none;
 }
 
 .box-evaluation {
