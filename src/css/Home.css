@@ -3,6 +3,10 @@
   width: 1100px;
 }
 
+.box-shop-search {
+  background: gainsboro;
+}
+
 .box-search {
   background: gainsboro;
   display: flex;
@@ -21,13 +25,14 @@
   border: solid 1px gray;
   border-radius: 50px;
   margin-right: 10px;
+  outline: 0;
   padding: 8px;
   width: 600px;
 }
 
 .box-input-search button {
   background-color: rgb(46, 134, 193);
-  border: solid 1px gray;
+  border: none;
   border-radius: 50px;
   color: white;
   cursor: pointer;
@@ -66,10 +71,12 @@
 
 .shop-cart:hover {
   background-color: rgb(27, 79, 114);
+  font-weight: 900;
 }
 
-.shop-cart img {
-  width: 30px;
+.cart-icon {
+  color: white;
+  font-size: 1.55rem;
 }
 
 .box-menu {
@@ -99,12 +106,24 @@ li {
   width: 200px;
 }
 
-.bt-category:hover {
+.btn-add-cart-card {
+  background-color: rgb(46, 134, 193);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 7px 10px;
+  text-align: center;
+  width: 180px;
+}
+
+.bt-category:hover, .btn-add-cart-card:hover {
   background-color: rgb(27, 79, 114);
   font-weight: 900;
 }
 
-.bt-category:active {
+.bt-category:active, .btn-add-cart-card:active {
   filter: brightness(0.5);
 }
 
@@ -114,13 +133,28 @@ li {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: 350px;
-  justify-content: center;
+  height: 370px;
+  justify-content: space-between;
   margin: 5px;
   padding: 5px;
   width: 210px;
 }
 
-.box-card img {
-  width: 130px;
+.box-card:hover {
+  box-shadow: 0 7px 8px rgba(0, 0, 0, 0.35);
+}
+
+.box-img-card img {
+  width: 100px;
+}
+
+.box-link-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.box-product-name-card, .box-img-card, .box-price-card {
+  margin: 5px;
 }

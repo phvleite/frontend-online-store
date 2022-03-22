@@ -1,6 +1,10 @@
 import { PropTypes } from 'prop-types';
+import { BsCartX, BsCartPlus, BsCartDash } from 'react-icons/bs';
 import React from 'react';
 
+// BsCartX
+// BsCartPlus
+// BsCartDash
 class Items extends React.Component {
   render() {
     const {
@@ -14,30 +18,45 @@ class Items extends React.Component {
       incItem } = this.props;
 
     return (
-      <div>
-        <p data-testid="shopping-cart-product-name">{productName}</p>
-        <div>
+      <div className="box-item-cart">
+        <div className="box-img-item-cart">
           <img src={ productImage } alt={ productName } />
         </div>
-        <p>{`R$ ${productPrice.toFixed(2)}`}</p>
-        <button
-          type="button"
-          value={ itemId }
-          data-testid="product-decrease-quantity"
-          onClick={ decItem }
-        >
-          -
-        </button>
-        <span data-testid="shopping-cart-product-quantity">{quantity}</span>
-        <button
-          value={ itemId }
-          type="button"
-          data-testid="product-increase-quantity"
-          onClick={ incItem }
-        >
-          +
-        </button>
-        <button value={ itemId } onClick={ removeItem } type="button">X</button>
+        <div className="box-details-item-cart">
+          <p data-testid="shopping-cart-product-name">{productName}</p>
+          <p>{`R$ ${productPrice.toFixed(2)}`}</p>
+          <div className="btns-item-cart">
+            <button
+              type="button"
+              value={ itemId }
+              data-testid="product-decrease-quantity"
+              onClick={ decItem }
+              className="btn-decrease-qtd"
+            >
+              <BsCartDash className="cart-icon-dash" />
+            </button>
+            <div className="box-quantity">
+              <span data-testid="shopping-cart-product-quantity">{quantity}</span>
+            </div>
+            <button
+              value={ itemId }
+              type="button"
+              data-testid="product-increase-quantity"
+              onClick={ incItem }
+              className="btn-increase-qtd"
+            >
+              <BsCartPlus className="cart-icon-plus" />
+            </button>
+            <button
+              value={ itemId }
+              onClick={ removeItem }
+              type="button"
+              className="btn-remove-item"
+            >
+              <BsCartX className="cart-icon-x" />
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

@@ -12,14 +12,20 @@ class ProductCard extends React.Component {
         <Link
           to={ `/details/${productId}` }
           data-testid="product-detail-link"
+          className="box-link-card"
         >
-          <p data-testid="product">{productName}</p>
-          <div>
+          <div className="box-product-name-card">
+            <p data-testid="product">{productName}</p>
+          </div>
+          <div className="box-img-card">
             <img src={ productImage } alt={ productName } />
           </div>
-          <p>{`R$: ${productPrice}`}</p>
+          <div className="box-price-card">
+            <p>{`R$: ${productPrice}`}</p>
+          </div>
         </Link>
         <button
+          className="btn-add-cart-card"
           type="button"
           data-testid="product-add-to-cart"
           onClick={ () => addItem(productObj) } // Objeto passado via props usado como parâmetro da função addItem

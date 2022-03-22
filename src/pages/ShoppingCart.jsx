@@ -1,17 +1,22 @@
 import { PropTypes } from 'prop-types';
+import { BsCart } from 'react-icons/bs';
 import React from 'react';
 import Items from '../components/Items';
+import '../css/ShoppingCart.css';
 
 class ShoppingCart extends React.Component {
   render() {
     const { items, incItem, decItem, removeItem } = this.props;
 
     return (
-      <div>
+      <div className="box-shopping-cart">
         {items.length === 0 ? (
-          <p data-testid="shopping-cart-empty-message">
-            Seu carrinho está vazio
-          </p>
+          <div className="box-info-empty-cart">
+            <BsCart className="cart-icon-empty" />
+            <p data-testid="shopping-cart-empty-message" className="empty-cart-message">
+              Seu carrinho está vazio
+            </p>
+          </div>
         ) : (
           <ul>
             {items.map((item) => (

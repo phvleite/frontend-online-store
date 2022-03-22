@@ -3,6 +3,7 @@ import React from 'react';
 import Evaluation from '../components/Evaluation';
 import EvaluationForm from '../components/EvaluationForm';
 import ShoppingCartButton from '../components/ShoppingCartButton';
+import '../css/Details.css';
 
 class Details extends React.Component {
   constructor() {
@@ -41,32 +42,40 @@ class Details extends React.Component {
     const { evaluations, submitEvaluation } = this.props;
 
     return (
-      <>
-        <ShoppingCartButton />
-        <h4 data-testid="product-detail-name">{details.title}</h4>
-        <img src={ details.thumbnail } alt={ details.title } />
-        <p>{ details.price }</p>
-        <button
-          type="button"
-          data-testid="product-detail-add-to-cart"
-          value={ details.id }
-          onClick={ this.addItem }
-        >
-          Adicionar ao carrinho
-        </button>
-        <EvaluationForm productId={ id } submitEvaluation={ submitEvaluation } />
-        <div>
-          {evaluations[details.id] && evaluations[details.id].map((evaluation) => (
-            <Evaluation
-              key={ evaluation.id }
-              email={ evaluation.email }
-              rating={ evaluation.rating }
-              message={ evaluation.message }
-            />
-          ))}
+      <div className="box-details">
+        <div className="box-product-cart-button">
+          <h3 data-testid="product-detail-name">{details.title}</h3>
+          <ShoppingCartButton />
         </div>
-
-      </>
+        <div className="box-details-body">
+          <div className="box-img-details">
+            <img src={ details.thumbnail } alt={ details.title } />
+          </div>
+          <div className="box-infos-details">
+            <p className="price-product">{ `R$ ${details.price}` }</p>
+            <button
+              type="button"
+              data-testid="product-detail-add-to-cart"
+              value={ details.id }
+              onClick={ this.addItem }
+              className="btn-add-details"
+            >
+              Adicionar ao carrinho
+            </button>
+            <EvaluationForm productId={ id } submitEvaluation={ submitEvaluation } />
+            <div>
+              {evaluations[details.id] && evaluations[details.id].map((evaluation) => (
+                <Evaluation
+                  key={ evaluation.id }
+                  email={ evaluation.email }
+                  rating={ evaluation.rating }
+                  message={ evaluation.message }
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
