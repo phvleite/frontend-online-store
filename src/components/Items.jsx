@@ -14,30 +14,48 @@ class Items extends React.Component {
       incItem } = this.props;
 
     return (
-      <div>
-        <p data-testid="shopping-cart-product-name">{productName}</p>
-        <div>
+      <div className="box-item-cart">
+        <div className="box-img-item-cart">
           <img src={ productImage } alt={ productName } />
         </div>
-        <p>{`R$ ${productPrice.toFixed(2)}`}</p>
-        <button
-          type="button"
-          value={ itemId }
-          data-testid="product-decrease-quantity"
-          onClick={ decItem }
-        >
-          -
-        </button>
-        <span data-testid="shopping-cart-product-quantity">{quantity}</span>
-        <button
-          value={ itemId }
-          type="button"
-          data-testid="product-increase-quantity"
-          onClick={ incItem }
-        >
-          +
-        </button>
-        <button value={ itemId } onClick={ removeItem } type="button">X</button>
+        <div className="box-details-item-cart">
+          <p data-testid="shopping-cart-product-name">{productName}</p>
+          <p>{`R$ ${productPrice.toFixed(2)}`}</p>
+          <div className="btns-item-cart">
+            <button
+              type="button"
+              value={ itemId }
+              data-testid="product-decrease-quantity"
+              onClick={ decItem }
+              className="btn-decrease-qtd"
+            >
+              -
+              {/* <BsCartDash /> */}
+            </button>
+            <div className="box-quantity">
+              <span data-testid="shopping-cart-product-quantity">{quantity}</span>
+            </div>
+            <button
+              value={ itemId }
+              type="button"
+              data-testid="product-increase-quantity"
+              onClick={ incItem }
+              className="btn-increase-qtd"
+            >
+              +
+              {/* <BsCartPlus /> */}
+            </button>
+            <button
+              value={ itemId }
+              onClick={ removeItem }
+              type="button"
+              className="btn-remove-item"
+            >
+              X
+              {/* <BsCartX /> */}
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

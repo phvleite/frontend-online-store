@@ -76,6 +76,7 @@ class App extends React.Component {
   incItem = async ({ target }) => {
     const { value } = target;
     const { items } = this.state;
+    console.log(target);
 
     // Implementada lógica para incrementar um ítem do carrinho
     const indexItems = items.findIndex((item) => item.id === value);

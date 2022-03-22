@@ -20,12 +20,14 @@ class EvaluationForm extends React.Component {
       <label
         htmlFor={ `rating-${index}` }
         key={ index }
+        className="rating-index"
       >
         <input
           data-testid={ `${index}-rating` }
           type="radio"
           name="rating"
           value={ index }
+          className="input-radio-rating"
         />
         {index}
       </label>
@@ -81,13 +83,14 @@ class EvaluationForm extends React.Component {
     this.setState({
       email: '',
       message: '',
+      buttonDisabled: true,
     });
   }
 
   render() {
     const { email, message, buttonDisabled } = this.state;
     return (
-      <div>
+      <div className="box-evaluation-form">
         <h2> Avaliações </h2>
         <form id="form" name="form" className="form">
           <input
@@ -99,9 +102,14 @@ class EvaluationForm extends React.Component {
             value={ email }
             onChange={ this.onInputChange }
             required
+            className="input-email"
           />
 
-          <div name="rating" onChange={ this.onInputChange }>
+          <div
+            name="rating"
+            onChange={ this.onInputChange }
+            className="rating-evaluation"
+          >
             {this.evaluationRatings()}
           </div>
 
@@ -111,12 +119,14 @@ class EvaluationForm extends React.Component {
             placeholder="Mensagem (opcional)"
             value={ message }
             onChange={ this.onInputChange }
+            className="message-evaluation"
           />
           <button
             type="submit"
             data-testid="submit-review-btn"
             disabled={ buttonDisabled }
             onClick={ this.saveEvaluation }
+            className="btn-submit-evalution"
           >
             Avaliar
           </button>

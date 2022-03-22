@@ -6,11 +6,11 @@ class Evaluation extends React.Component {
     const { email, rating, message } = this.props;
 
     return (
-      <div>
-        <p>{`${email}`}</p>
-        <p>{`${rating}`}</p>
+      <div className="box-evaluation">
+        <p>{email}</p>
+        <p>{rating}</p>
         {
-          message.length > 0 && <p>{`${message}`}</p>
+          message.length > 0 && <p>{message}</p>
         }
       </div>
     );
