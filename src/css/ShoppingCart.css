@@ -107,11 +107,11 @@
   width: 50px;
 }
 
-/* .btns-item-cart:hover {
+.btn-increase-qtd:hover, .btn-decrease-qtd:hover, .btn-remove-item:hover {
   background-color: rgb(27, 79, 114);
   font-weight: 900;
 }
 
-.btns-item-cart:active {
+.btn-decrease-qtd:active {
   filter: brightness(0.5);
-} */
+}

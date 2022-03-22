@@ -2,9 +2,6 @@ import { PropTypes } from 'prop-types';
 import { BsCartX, BsCartPlus, BsCartDash } from 'react-icons/bs';
 import React from 'react';
 
-// BsCartX
-// BsCartPlus
-// BsCartDash
 class Items extends React.Component {
   render() {
     const {
@@ -33,7 +30,8 @@ class Items extends React.Component {
               onClick={ decItem }
               className="btn-decrease-qtd"
             >
-              <BsCartDash className="cart-icon-dash" />
+              -
+              {/* <BsCartDash /> */}
             </button>
             <div className="box-quantity">
               <span data-testid="shopping-cart-product-quantity">{quantity}</span>
@@ -45,7 +43,8 @@ class Items extends React.Component {
               onClick={ incItem }
               className="btn-increase-qtd"
             >
-              <BsCartPlus className="cart-icon-plus" />
+              +
+              {/* <BsCartPlus /> */}
             </button>
             <button
               value={ itemId }
@@ -53,7 +52,8 @@ class Items extends React.Component {
               type="button"
               className="btn-remove-item"
             >
-              <BsCartX className="cart-icon-x" />
+              X
+              {/* <BsCartX /> */}
             </button>
           </div>
         </div>
